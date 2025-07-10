@@ -6,8 +6,10 @@
     <link rel="stylesheet" href="style.css">
 </head>
 <body>
-    <h1>Laskun yksityiskohdat</h1>
-<div id="invoice-details" style="font-size: 0.9em;">
+
+<h1>Lasku <span id="invoice-number"></span></h1>
+
+<div id="invoice-details">
     <label><strong>Asiakas:</strong><br>
         <input type="text" id="client" />
     </label><br><br>
@@ -25,11 +27,30 @@
 <button id="edit-btn" style="font-size: 0.9em; margin-right: 5px;">Muokkaa</button>
 <button id="save-btn" style="display:none; font-size: 0.9em;">Tallenna muutokset</button>
 
-<button id="invoice-btn" style="display:none; font-size: 0.9em; ">Laskuta</button>
+<button id="invoice-btn" style="display:none; font-size: 0.9em;">Laskuta</button>
 <button id="unsent-btn" style="display:none; font-size: 0.9em;">Palauta</button>
+
+<table id="positions-table" style="width: 100%; border-collapse: collapse; margin-top: 20px;">
+  <thead>
+    <tr>
+      <th>Kuvaus</th>
+      <th>Määrä</th>
+      <th>Yksikköhinta (€)</th>
+      <th>Yhteensä (€)</th>
+      <th>Toiminnot</th> <!-- For Delete button -->
+    </tr>
+  </thead>
+  <tbody>
+    <!-- Positions rows will be inserted here -->
+  </tbody>
+</table>
+
+<button id="add-position-btn" style="margin-top: 20px; font-size: 0.9em;">Lisää rivi</button>
+
 <div style="margin-top: 20px;">
 <a href="index.html">← Takaisin laskuihin</a>
 </div>
+
 <script src="invoice.js"></script>
 </body>
 </html>

@@ -1,11 +1,88 @@
 [
-    { "invoice": "INV001", "client": "Invalidiliitto ry", "price": "120.00", "address": "Mannerheimintie 107, 00280 Helsinki" },
-    { "invoice": "INV002", "client": "Senaatti-kiinteistöt", "price": "250.00", "address": "Lintulahdenkuja 4, 00530 Helsinki" },
-    { "invoice": "INV101", "client": "Invalidiliitto ry", "price": "310.00", "address": "Mannerheimintie 107, 00280 Helsinki" },
-    { "invoice": "INV102", "client": "Leijonaverkot Oy", "price": "420.00", "address": "Itälahdenkatu 22 B, 00210 Helsinki" },
-    { "invoice": "INV201", "client": "Leijonaverkot Oy", "price": "150.00", "address": "Itälahdenkatu 22 B, 00210 Helsinki" },
-    { "invoice": "INV301", "client": "Invalidiliitto ry", "price": "80.00", "address": "Mannerheimintie 107, 00280 Helsinki" },
-    { "invoice": "INV302", "client": "Invalidiliitto ry", "price": "95.00", "address": "Mannerheimintie 107, 00280 Helsinki" },
-    { "invoice": "INV303", "client": "Senaatti-kiinteistöt", "price": "180.00", "address": "Lintulahdenkuja 4, 00530 Helsinki" },
-    { "invoice": "INV401", "client": "Liedon Asunnot Oy", "price": "999.99", "address": "Hyvättyläntie 9, 21420 Lieto" }
+  {
+    "invoice": "INV001",
+    "client": "Invalidiliitto ry",
+    "price": "120.00",
+    "address": "Mannerheimintie 107, 00280 Helsinki",
+    "positions": [
+      { "description": "Fysioterapia", "quantity": 2, "unitPrice": 60.00 },
+      { "description": "Konsultointi", "quantity": 1, "unitPrice": 80.00 }
+    ]
+  },
+  {
+    "invoice": "INV002",
+    "client": "Senaatti-kiinteistöt",
+    "price": "250.00",
+    "address": "Lintulahdenkuja 4, 00530 Helsinki",
+    "positions": [
+      { "description": "Huoltopalvelut", "quantity": 5, "unitPrice": 50.00 }
+    ]
+  },
+  {
+    "invoice": "INV101",
+    "client": "Invalidiliitto ry",
+    "price": "310.00",
+    "address": "Mannerheimintie 107, 00280 Helsinki",
+    "positions": [
+      { "description": "Kuntoutus", "quantity": 3, "unitPrice": 70.00 },
+      { "description": "Ergonomiakartoitus", "quantity": 1, "unitPrice": 100.00 }
+    ]
+  },
+  {
+    "invoice": "INV102",
+    "client": "Leijonaverkot Oy",
+    "price": "420.00",
+    "address": "Itälahdenkatu 22 B, 00210 Helsinki",
+    "positions": [
+      { "description": "Verkkoasennus", "quantity": 2, "unitPrice": 150.00 },
+      { "description": "Tukipalvelut", "quantity": 2, "unitPrice": 60.00 }
+    ]
+  },
+  {
+    "invoice": "INV201",
+    "client": "Leijonaverkot Oy",
+    "price": "150.00",
+    "address": "Itälahdenkatu 22 B, 00210 Helsinki",
+    "positions": [
+      { "description": "Laiteasennus", "quantity": 1, "unitPrice": 100.00 },
+      { "description": "Matkakulut", "quantity": 1, "unitPrice": 50.00 }
+    ]
+  },
+  {
+    "invoice": "INV301",
+    "client": "Invalidiliitto ry",
+    "price": "80.00",
+    "address": "Mannerheimintie 107, 00280 Helsinki",
+    "positions": [
+      { "description": "Hierontapalvelu", "quantity": 2, "unitPrice": 40.00 }
+    ]
+  },
+  {
+    "invoice": "INV302",
+    "client": "Invalidiliitto ry",
+    "price": "95.00",
+    "address": "Mannerheimintie 107, 00280 Helsinki",
+    "positions": [
+      { "description": "Kuntotestaus", "quantity": 1, "unitPrice": 95.00 }
+    ]
+  },
+  {
+    "invoice": "INV303",
+    "client": "Senaatti-kiinteistöt",
+    "price": "180.00",
+    "address": "Lintulahdenkuja 4, 00530 Helsinki",
+    "positions": [
+      { "description": "Järjestelmäpäivitys", "quantity": 2, "unitPrice": 90.00 }
+    ]
+  },
+  {
+    "invoice": "INV401",
+    "client": "Liedon Asunnot Oy",
+    "price": "999.99",
+    "address": "Hyvättyläntie 9, 21420 Lieto",
+    "positions": [
+      { "description": "Asennuspalvelu", "quantity": 4, "unitPrice": 200.00 },
+      { "description": "Käyttöönotto", "quantity": 1, "unitPrice": 199.99 }
+    ]
+  }
 ]
