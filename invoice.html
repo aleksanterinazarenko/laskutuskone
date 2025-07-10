@@ -7,8 +7,25 @@
 </head>
 <body>
     <h1>Laskun yksityiskohdat</h1>
-<div id="invoice-details">Lataa...</div>
-<button id="invoice-btn" style="display:none; font-size: 0.9em;">Laskuta</button>
+<div id="invoice-details" style="font-size: 0.9em;">
+    <label><strong>Asiakas:</strong><br>
+        <input type="text" id="client" />
+    </label><br><br>
+
+    <label><strong>Laskutusosoite:</strong><br>
+        <input type="text" id="address" />
+    </label><br><br>
+
+    <label><strong>Hinta:</strong><br>
+        <input type="text" id="price" />
+    </label><br><br>
+
+</div>
+
+<button id="edit-btn" style="font-size: 0.9em; margin-right: 5px;">Muokkaa</button>
+<button id="save-btn" style="display:none; font-size: 0.9em;">Tallenna muutokset</button>
+
+<button id="invoice-btn" style="display:none; font-size: 0.9em; ">Laskuta</button>
 <button id="unsent-btn" style="display:none; font-size: 0.9em;">Palauta</button>
 <div style="margin-top: 20px;">
 <a href="index.html">← Takaisin laskuihin</a>

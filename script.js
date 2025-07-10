@@ -32,9 +32,14 @@ document.addEventListener('DOMContentLoaded', () => {
     function renderInvoices(tabKey) {
         const invoices = allInvoices.filter(inv => getTab(inv.invoice) === tabKey);
         invoiceContainer.innerHTML = invoices.map(inv => {
-            const isSent = localStorage.getItem(inv.invoice) === 'sent';
+    const isSent = localStorage.getItem(inv.invoice) === 'sent';
 
-            let actions = '';
+    const saved = JSON.parse(localStorage.getItem(`edit_${inv.invoice}`) || '{}');
+    const client = saved.client || inv.client;
+    const price = saved.price || inv.price;
+    const address = saved.address || inv.address || '';
+
+    let actions = '';
 
             // Actions depending on tab
             if (tabKey === 'tab1') {
@@ -55,15 +60,16 @@ else if (tabKey === 'tab4') {
 }
 
             return `
-                <div class="invoice-item">
-                    <strong>Lasku:</strong> <a href="invoice.html?invoice=${inv.invoice}">${inv.invoice}</a> 
-                    <br>
-                    <strong>Asiakas:</strong> ${inv.client} <br>
-                    <strong>Hinta:</strong> ${inv.price} <br>
-                    ${actions}
-                </div>
-            `;
-        }).join('');
+    <div class="invoice-item">
+        <strong>Lasku:</strong> <a href="invoice.html?invoice=${inv.invoice}">${inv.invoice}</a> 
+        <br>
+        <strong>Asiakas:</strong> ${client} <br>
+        <strong>Osoite:</strong> ${address || '-'} <br>
+        <strong>Hinta:</strong> ${price} <br>
+        ${actions}
+    </div>
+`;
+}).join('');
 
         // Attach event handlers
         document.querySelectorAll('.invoice-btn').forEach(btn => {

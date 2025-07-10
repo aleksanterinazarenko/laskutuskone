@@ -61,6 +61,7 @@ a:hover {
     border: 1px solid #ddd;
     padding: 15px;
     border-radius: 4px;
+    font-size: 0.9em;
 }
 
 .invoice-btn {
