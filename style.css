@@ -1,0 +1,117 @@
+body {
+    font-family: Roboto, sans-serif;
+    margin: 40px;
+    background-color: #f8f9fa;
+}
+
+h1 {
+    margin-bottom: 20px;
+}
+
+.tabs {
+    display: flex;
+    margin-bottom: 20px;
+}
+
+.tab-btn {
+    padding: 10px 20px;
+    border: 1px solid #ccc;
+    background-color: #e9ecef;
+    cursor: pointer;
+    margin-right: 5px;
+    border-radius: 4px;
+    transition: background-color 0.3s;
+    font-family: Roboto, sans-serif;
+    font-size: 0.9em;
+}
+
+.tab-btn.active {
+    background-color: #007bff;
+    color: white;
+}
+
+.invoice-list {
+    background: white;
+    border: 1px solid #ddd;
+    border-radius: 4px;
+    padding: 15px;
+}
+
+.invoice-item {
+    padding: 10px;
+    border-bottom: 1px solid #eee;
+}
+
+.invoice-item:last-child {
+    border-bottom: none;
+}
+
+a {
+    color: #007bff;
+    text-decoration: none;
+}
+
+a:hover {
+    text-decoration: underline;
+}
+
+#invoice-details {
+    margin: 20px 0;
+    background: #fff;
+    border: 1px solid #ddd;
+    padding: 15px;
+    border-radius: 4px;
+}
+
+.invoice-btn {
+    margin-top: 8px;
+    padding: 5px 10px;
+    cursor: pointer;
+    background-color: #007bff;
+    color: white;
+    border: none;
+    border-radius: 3px;
+    font-size: 0.9em;
+    transition: background-color 0.3s;
+}
+
+.invoice-btn:hover {
+    background-color: #0056b3;
+}
+
+.sent-label {
+    color: green;
+    font-weight: bold;
+}
+
+.unsent-btn {
+    margin-top: 8px;
+    padding: 5px 10px;
+    cursor: pointer;
+    background-color: #dc3545; /* bootstrap danger red */
+    color: white;
+    border: none;
+    border-radius: 3px;
+    font-size: 0.9em;
+    transition: background-color 0.3s;
+}
+
+.unsent-btn:hover {
+    background-color: #b02a37;
+}
+
+.move-btn {
+    margin-top: 8px;
+    padding: 5px 10px;
+    cursor: pointer;
+    background-color: #ffc107; /* Bootstrap warning yellow */
+    color: black;
+    border: none;
+    border-radius: 3px;
+    font-size: 0.9em;
+    transition: background-color 0.3s;
+}
+
+.move-btn:hover {
+    background-color: #e0a800;
+}
