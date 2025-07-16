@@ -44,8 +44,8 @@ document.addEventListener('DOMContentLoaded', () => {
   });
 
   function formatInvoiceNumber(num) {
-    return num.toString().padStart(4, '0');
-  }
+  return 'INV' + num.toString().padStart(3, '0');
+}
 
   function getNewInvoices() {
     const invStr = localStorage.getItem('newInvoices');
@@ -67,7 +67,9 @@ document.addEventListener('DOMContentLoaded', () => {
     const allInvoices = await fetchAllInvoices();
     if (allInvoices.length === 0) return '0001';
 
-    const numbers = allInvoices.map(inv => parseInt(inv.invoice, 10)).filter(n => !isNaN(n));
+    const numbers = allInvoices
+  .map(inv => parseInt(inv.invoice.replace(/^INV/, ''), 10))
+  .filter(n => !isNaN(n));
     const maxNum = numbers.length ? Math.max(...numbers) : 0;
     return formatInvoiceNumber(maxNum + 1);
   }

@@ -19,7 +19,7 @@
     ]
   },
   {
-    "invoice": "INV101",
+    "invoice": "INV003",
     "client": "Invalidiliitto ry",
     "price": "310.00",
     "address": "Mannerheimintie 107, 00280 Helsinki",
@@ -29,7 +29,7 @@
     ]
   },
   {
-    "invoice": "INV102",
+    "invoice": "INV004",
     "client": "Leijonaverkot Oy",
     "price": "420.00",
     "address": "Itälahdenkatu 22 B, 00210 Helsinki",
@@ -39,7 +39,7 @@
     ]
   },
   {
-    "invoice": "INV201",
+    "invoice": "INV005",
     "client": "Leijonaverkot Oy",
     "price": "150.00",
     "address": "Itälahdenkatu 22 B, 00210 Helsinki",
@@ -49,7 +49,7 @@
     ]
   },
   {
-    "invoice": "INV301",
+    "invoice": "INV006",
     "client": "Invalidiliitto ry",
     "price": "80.00",
     "address": "Mannerheimintie 107, 00280 Helsinki",
@@ -58,7 +58,7 @@
     ]
   },
   {
-    "invoice": "INV302",
+    "invoice": "INV007",
     "client": "Invalidiliitto ry",
     "price": "95.00",
     "address": "Mannerheimintie 107, 00280 Helsinki",
@@ -67,7 +67,7 @@
     ]
   },
   {
-    "invoice": "INV303",
+    "invoice": "INV008",
     "client": "Senaatti-kiinteistöt",
     "price": "180.00",
     "address": "Lintulahdenkuja 4, 00530 Helsinki",
@@ -76,7 +76,7 @@
     ]
   },
   {
-    "invoice": "INV401",
+    "invoice": "INV009",
     "client": "Liedon Asunnot Oy",
     "price": "999.99",
     "address": "Hyvättyläntie 9, 21420 Lieto",
