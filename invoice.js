@@ -11,6 +11,7 @@ const addPositionBtn = document.getElementById('add-position-btn');
 const positionsTableBody = document.querySelector('#positions-table tbody');
 const editBtn = document.getElementById('edit-btn');
 const saveBtn = document.getElementById('save-btn');
+const deleteInvoiceBtn = document.getElementById('delete-invoice-btn');
 
 let positions = [];
 
@@ -51,7 +52,9 @@ const translations = {
     actionsHeader: 'Toiminnot',
     backLink: '← Takaisin laskuihin',
     fiOption: 'Suomi',
-    enOption: 'English'
+    enOption: 'English',
+    deleteinvoice: 'Poista lasku',
+    deleteConfirm: 'Oletko varma, että haluat poistaa laskun? Tätä toimintoa ei voi peruuttaa.'
   },
   en: {
     sentLabel: 'SENT',
@@ -77,9 +80,27 @@ const translations = {
     actionsHeader: 'Actions',
     backLink: '← Back to invoices',
     fiOption: 'Suomi',
-    enOption: 'English'
+    enOption: 'English',
+    deleteinvoice: 'Delete Invoice',
+    deleteConfirm: 'Are you sure you want to delete this invoice? This action cannot be undone.'
   }
 };
+
+if (deleteInvoiceBtn) {
+  deleteInvoiceBtn.addEventListener('click', () => {
+    if (confirm(translations[currentLang].deleteConfirm)) {
+      localStorage.removeItem(`edit_${invoiceId}`);
+      localStorage.removeItem(invoiceId);
+      localStorage.removeItem(`tab_${invoiceId}`);
+
+      let newInvoices = JSON.parse(localStorage.getItem('newInvoices') || '[]');
+      newInvoices = newInvoices.filter(inv => inv.invoice !== invoiceId);
+      localStorage.setItem('newInvoices', JSON.stringify(newInvoices));
+
+      window.location.href = 'index.html';
+    }
+  });
+}
 
 function updateStaticTexts() {
   const t = translations[currentLang];
@@ -152,7 +173,7 @@ unsentBtn.addEventListener('click', () => {
 function setInputsDisabled(disabled) {
   document.getElementById('client').disabled = disabled;
   document.getElementById('address').disabled = disabled;
-  document.getElementById('price').disabled = disabled;
+  document.getElementById('price').disabled = true;
 }
 
 function updateTotalPrice() {
@@ -296,7 +317,7 @@ editBtn.addEventListener('click', () => {
   saveBtn.style.display = 'inline-block';
   addPositionBtn.disabled = false;
   renderPositions(positions, true);
-  updateAllTexts(); // Update texts in edit mode
+  updateAllTexts();
 });
 
 saveBtn.addEventListener('click', () => {
