@@ -127,13 +127,19 @@ document.addEventListener('DOMContentLoaded', () => {
         });
     }
 
-    fetch('data.json')
-        .then(response => response.json())
-        .then(data => {
-            allInvoices = data;
-            setLanguage(currentLang);
-            renderInvoices('tab1');
-        });
+    function getNewInvoices() {
+  const invStr = localStorage.getItem('newInvoices');
+  return invStr ? JSON.parse(invStr) : [];
+}
+
+fetch('data.json')
+  .then(response => response.json())
+  .then(data => {
+      const newInvoices = getNewInvoices();
+      allInvoices = data.concat(newInvoices);
+      setLanguage(currentLang);
+      renderInvoices('tab1');
+  });
 
     tabs.forEach(tab => {
         tab.addEventListener('click', () => {

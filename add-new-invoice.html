@@ -1,0 +1,151 @@
+<!DOCTYPE html>
+<html lang="fi">
+<head>
+  <meta charset="UTF-8">
+  <title>Uusi Lasku</title>
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+  <a href="index.html" data-translate-key="backLink">← Takaisin laskuihin</a>
+  <h1 data-translate-key="newInvoice">Uusi lasku</h1>
+
+  <div>
+    <label for="new-client" data-translate-key="clientLabel">Asiakas:</label>
+    <input type="text" id="new-client" required><br>
+
+    <label for="new-address" data-translate-key="addressLabel">Osoite:</label>
+    <input type="text" id="new-address" required><br>
+
+    <button id="create-invoice-btn" data-translate-key="createInvoice">Luo lasku</button>
+  </div>
+
+  <label for="lang-select" data-translate-key="languageLabel">Kieli / Language:</label>
+  <select id="lang-select">
+    <option value="fi" data-translate-key="fiOption">Suomi</option>
+    <option value="en" data-translate-key="enOption">English</option>
+  </select>
+
+  <style>
+* {
+  box-sizing: border-box;
+}
+
+body {
+  background: #f9f9f9;
+  margin: 0;
+  padding: 20px;
+  color: #333;
+}
+
+h1 {
+  margin-bottom: 20px;
+  color: #222;
+}
+
+form {
+  background: #fff;
+  padding: 20px;
+  max-width: 800px;
+  margin: 0 auto 40px;
+  border-radius: 8px;
+  box-shadow: 0 0 8px rgba(0,0,0,0.1);
+}
+
+label {
+  display: block;
+  font-weight: 600;
+  margin-bottom: 6px;
+  margin-top: 14px;
+}
+
+input[type="text"],
+input[type="number"],
+textarea {
+  width: 100%;
+  padding: 8px 12px;
+  font-size: 1em;
+  border: 1.5px solid #ccc;
+  border-radius: 4px;
+  transition: border-color 0.3s ease;
+}
+
+input[type="text"]:focus,
+input[type="number"]:focus,
+textarea:focus {
+  border-color: #4a90e2;
+  outline: none;
+}
+
+button {
+  margin-top: 20px;
+  padding: 5px 10px;
+  font-size: 0.9em;
+  color: #fff;
+  background-color: #4a90e2;
+  border: none;
+  border-radius: 3px;
+  cursor: pointer;
+  transition: background-color 0.3s;
+}
+
+button:hover {
+  background-color: #357ABD;
+}
+
+#positions-table {
+  width: 100%;
+  border-collapse: collapse;
+  margin-top: 20px;
+}
+
+#positions-table th,
+#positions-table td {
+  border: 1px solid #ddd;
+  padding: 8px 12px;
+  text-align: left;
+}
+
+#positions-table th {
+  background-color: #f2f2f2;
+  font-weight: 700;
+}
+
+#positions-table input[type="text"],
+#positions-table input[type="number"] {
+  width: 100%;
+  box-sizing: border-box;
+  border-radius: 3px;
+  border: 1px solid #ccc;
+  padding: 6px;
+}
+
+.delete-position {
+  background-color: #e74c3c;
+  color: white;
+  border: none;
+  border-radius: 4px;
+  padding: 6px 10px;
+  cursor: pointer;
+  font-size: 0.9em;
+  transition: background-color 0.25s ease;
+}
+
+.delete-position:hover {
+  background-color: #c0392b;
+}
+
+@media (max-width: 600px) {
+  form {
+    padding: 15px;
+  }
+
+  button {
+    width: 100%;
+    margin-top: 15px;
+  }
+}
+  </style>
+
+  <script src="add-new-invoice.js"></script>
+</body>
+</html>
