@@ -1,24 +1,76 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="fi">
 <head>
     <meta charset="UTF-8">
     <title>Laskutuskone</title>
     <link rel="stylesheet" href="style.css">
+
 </head>
 <body>
-    <h1>Laskut</h1>
+    <div class="header-row">
+    <h1 id="main-title" data-translate-key="invoices">Laskut</h1>
+
+    <div>
+      <label for="lang-select">Kieli / Language:</label>
+      <select id="lang-select">
+        <option value="fi">Suomi</option>
+        <option value="en">English</option>
+      </select>
+    </div>
+</div>
+
     <div class="tabs">
-        <button class="tab-btn active" data-tab="tab1">Tulossa</button>
-        <button class="tab-btn" data-tab="tab2">Laskutettavissa</button>
-        <button class="tab-btn" data-tab="tab3">Odottaa lähetystä</button>
-        <button class="tab-btn" data-tab="tab4">Lähetetty</button>
-        <button class="tab-btn" data-tab="tab5">Laskutettu</button>
+        <button class="tab-btn active" data-tab="tab1" data-translate-key="incoming" id="tab1-label">Tulossa</button>
+        <button class="tab-btn" data-tab="tab2" data-translate-key="billable" id="tab2-label">Laskutettavissa</button>
+        <button class="tab-btn" data-tab="tab3" data-translate-key="waitingToSend" id="tab3-label">Odottaa lähetystä</button>
+        <button class="tab-btn" data-tab="tab4" data-translate-key="sent" id="tab4-label">Lähetetty</button>
+        <button class="tab-btn" data-tab="tab5" data-translate-key="billed" id="tab5-label">Laskutettu</button>
     </div>
 
     <div id="invoices" class="invoice-list">
         <!-- Invoice items will be inserted here -->
     </div>
 
+    <!-- Load language and translation logic -->
     <script src="script.js"></script>
+    <script>
+      const translations = {
+        en: {
+          invoices: "Invoices",
+          incoming: "Incoming",
+          billable: "Billable",
+          waitingToSend: "Waiting to Send",
+          sent: "Sent",
+          billed: "Billed",
+        },
+        fi: {
+          invoices: "Laskut",
+          incoming: "Tulossa",
+          billable: "Laskutettavissa",
+          waitingToSend: "Odottaa lähetystä",
+          sent: "Lähetetty",
+          billed: "Laskutettu"
+        }
+      };
+
+      function setLanguage(lang) {
+        document.querySelectorAll("[data-translate-key]").forEach(el => {
+          const key = el.getAttribute("data-translate-key");
+          if (translations[lang] && translations[lang][key]) {
+            el.innerText = translations[lang][key];
+          }
+        });
+      }
+
+      // Set initial language based on browser or default to Finnish
+      const userLang = navigator.language.startsWith('en') ? 'en' : 'fi';
+      document.getElementById('lang-select').value = userLang;
+      setLanguage(userLang);
+
+      // Listen for language change from dropdown
+      document.getElementById('lang-select').addEventListener('change', (e) => {
+        setLanguage(e.target.value);
+      });
+    </script>
 </body>
 </html>

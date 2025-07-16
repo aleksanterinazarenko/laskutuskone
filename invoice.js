@@ -14,17 +14,121 @@ const saveBtn = document.getElementById('save-btn');
 
 let positions = [];
 
+const langSelect = document.getElementById('lang-select');
+let currentLang = 'fi'; // default language
+
+if (langSelect) {
+  currentLang = langSelect.value || 'fi';
+
+  // Add language change listener once
+  langSelect.addEventListener('change', e => {
+    currentLang = e.target.value;
+    updateAllTexts();
+  });
+}
+
+const translations = {
+  fi: {
+    sentLabel: 'LÄHETETTY',
+    saveNotification: 'TIEDOT TALLENNETTU',
+    noDataFound: 'Mitään ei ole löydetty.',
+    loadFailed: 'Lataaminen on epäonnistunut.',
+    deleteBtn: 'Poista',
+    addRowAlert: 'Avaa muokkaustila lisätäksesi rivejä.',
+    invoiceBtn: 'Laskuta',
+    unsentBtn: 'Palauta',
+    editBtn: 'Muokkaa',
+    saveBtn: 'Tallenna',
+    invoiceTitle: 'Lasku',
+    languageLabel: 'Kieli / Language:',
+    clientLabel: 'Asiakas:',
+    addressLabel: 'Laskutusosoite:',
+    priceLabel: 'Hinta:',
+    addPositionBtn: 'Lisää rivi',
+    descHeader: 'Kuvaus',
+    qtyHeader: 'Määrä',
+    unitPriceHeader: 'Yksikköhinta (€)',
+    totalHeader: 'Yhteensä (€)',
+    actionsHeader: 'Toiminnot',
+    backLink: '← Takaisin laskuihin',
+    fiOption: 'Suomi',
+    enOption: 'English'
+  },
+  en: {
+    sentLabel: 'SENT',
+    saveNotification: 'DATA SAVED',
+    noDataFound: 'Nothing found.',
+    loadFailed: 'Loading failed.',
+    deleteBtn: 'Delete',
+    addRowAlert: 'Open edit mode to add rows.',
+    invoiceBtn: 'Invoice',
+    unsentBtn: 'Restore',
+    editBtn: 'Edit',
+    saveBtn: 'Save',
+    invoiceTitle: 'Invoice',
+    languageLabel: 'Language / Kieli:',
+    clientLabel: 'Client:',
+    addressLabel: 'Billing address:',
+    priceLabel: 'Price:',
+    addPositionBtn: 'Add Row',
+    descHeader: 'Description',
+    qtyHeader: 'Quantity',
+    unitPriceHeader: 'Unit Price (€)',
+    totalHeader: 'Total (€)',
+    actionsHeader: 'Actions',
+    backLink: '← Back to invoices',
+    fiOption: 'Suomi',
+    enOption: 'English'
+  }
+};
+
+function updateStaticTexts() {
+  const t = translations[currentLang];
+  document.querySelectorAll('[data-translate-key]').forEach(el => {
+    const key = el.getAttribute('data-translate-key');
+    if (key in t) {
+      el.textContent = t[key];
+    }
+  });
+}
+
+function updateAllTexts() {
+  const t = translations[currentLang];
+
+  // Update button labels
+  if (invoiceBtn) invoiceBtn.textContent = t.invoiceBtn;
+  if (unsentBtn) unsentBtn.textContent = t.unsentBtn;
+  if (editBtn) editBtn.textContent = t.editBtn;
+  if (saveBtn) saveBtn.textContent = t.saveBtn;
+  if (addPositionBtn) addPositionBtn.textContent = t.addPositionBtn;
+
+  // Update sent label text if visible
+  const sentLabel = document.querySelector('.sent-label');
+  if (sentLabel) sentLabel.textContent = t.sentLabel;
+
+  // Update static texts marked with data-translate-key attributes
+  updateStaticTexts();
+
+  // Re-render positions to update delete buttons and totals according to edit mode
+  const isEditing = saveBtn.style.display === 'inline-block';
+  renderPositions(positions, isEditing);
+}
+
 function updateSentStatus() {
+  const t = translations[currentLang];
   const isSent = localStorage.getItem(invoiceId) === 'sent';
   if (isSent) {
     invoiceBtn.style.display = 'none';
     unsentBtn.style.display = 'inline-block';
+
     if (!document.querySelector('.sent-label')) {
       const sentLabel = document.createElement('span');
       sentLabel.className = 'sent-label';
-      sentLabel.textContent = 'LÄHETETTY';
+      sentLabel.textContent = t.sentLabel;
       sentLabel.style.marginRight = '10px';
       detailsContainer.appendChild(sentLabel);
+    } else {
+      document.querySelector('.sent-label').textContent = t.sentLabel;
     }
   } else {
     invoiceBtn.style.display = 'inline-block';
@@ -38,18 +142,17 @@ invoiceBtn.addEventListener('click', () => {
   localStorage.setItem(invoiceId, 'sent');
   localStorage.setItem(`tab_${invoiceId}`, 'tab4');
   updateSentStatus();
-  // Disable editing when sent
   setInputsDisabled(true);
   editBtn.disabled = true;
   renderPositions(positions, false);
 });
 
 unsentBtn.addEventListener('click', () => {
-  localStorage.removeItem(invoiceId); // remove sent status
-  localStorage.setItem(`tab_${invoiceId}`, 'tab2'); // move back to tab2
+  localStorage.removeItem(invoiceId);
+  localStorage.setItem(`tab_${invoiceId}`, 'tab2');
   updateSentStatus();
-  // Enable editing again
   editBtn.disabled = false;
+  // Possibly enable editing if needed here
 });
 
 function setInputsDisabled(disabled) {
@@ -66,6 +169,7 @@ function updateTotalPrice() {
 }
 
 function renderPositions(positionsArray, editable = false) {
+  const t = translations[currentLang];
   positionsTableBody.innerHTML = '';
 
   positionsArray.forEach((pos, index) => {
@@ -77,7 +181,7 @@ function renderPositions(positionsArray, editable = false) {
         <td><input type="number" min="0" class="pos-qty" value="${pos.quantity || 0}" style="width: 60px; font-size: 1em;"></td>
         <td><input type="number" min="0" step="0.01" class="pos-unit" value="${pos.unitPrice || 0}" style="width: 80px; font-size: 1em;"></td>
         <td class="pos-total">${((pos.quantity || 0) * (pos.unitPrice || 0)).toFixed(2)}</td>
-        <td><button class="delete-position" data-index="${index}" style="font-size: 0.9em;">Poista</button></td>
+        <td><button class="delete-position" data-index="${index}" style="font-size: 0.9em;">${t.deleteBtn}</button></td>
       `;
     } else {
       const total = ((pos.quantity || 0) * (pos.unitPrice || 0)).toFixed(2);
@@ -94,7 +198,7 @@ function renderPositions(positionsArray, editable = false) {
   });
 
   if (editable) {
-    // Delete buttons
+    // Add event listeners to delete buttons
     document.querySelectorAll('.delete-position').forEach(btn => {
       btn.addEventListener('click', e => {
         const idx = parseInt(e.target.dataset.index, 10);
@@ -104,6 +208,7 @@ function renderPositions(positionsArray, editable = false) {
       });
     });
 
+    // Add event listeners to inputs to update positions on input change
     const descInputs = document.querySelectorAll('.pos-desc');
     const qtyInputs = document.querySelectorAll('.pos-qty');
     const unitInputs = document.querySelectorAll('.pos-unit');
@@ -143,7 +248,6 @@ fetch('data.json')
     const savedEdits = JSON.parse(localStorage.getItem(`edit_${invoiceId}`) || '{}');
 
     if (found) {
-      // Show invoice number in the page
       const invoiceNumberSpan = document.getElementById('invoice-number');
       if (invoiceNumberSpan) {
         invoiceNumberSpan.textContent = found.invoice || invoiceId;
@@ -155,25 +259,26 @@ fetch('data.json')
       document.getElementById('address').value = merged.address || '';
       document.getElementById('price').value = merged.price || '';
 
-      document.getElementById('client').style.fontSize = '1.1em';
-      document.getElementById('address').style.fontSize = '1.1em';
-      document.getElementById('price').style.fontSize = '1.1em';
-
-      document.getElementById('client').style.marginTop = '8px';
-      document.getElementById('address').style.marginTop = '8px';
-      document.getElementById('price').style.marginTop = '8px';
+      // Style adjustments
+      ['client', 'address', 'price'].forEach(id => {
+        const el = document.getElementById(id);
+        el.style.fontSize = '1em';
+        el.style.marginTop = '8px';
+      });
 
       updateSentStatus();
 
       positions = Array.isArray(merged.positions) ? merged.positions : [];
       renderPositions(positions, false);
 
-      // Disable edit button if in tab4 (sent)
       if (localStorage.getItem(`tab_${invoiceId}`) === 'tab4') {
         editBtn.disabled = true;
       }
+
+      // Update UI text for current language after loading data
+      updateAllTexts();
     } else {
-      detailsContainer.innerHTML = '<p style="color:red;">Mitään ei ole löydetty.</p>';
+      detailsContainer.innerHTML = `<p style="color:red;">${translations[currentLang].noDataFound}</p>`;
       invoiceBtn.style.display = 'none';
       unsentBtn.style.display = 'none';
       editBtn.disabled = true;
@@ -183,7 +288,7 @@ fetch('data.json')
   })
   .catch(error => {
     console.error('Error:', error);
-    detailsContainer.innerHTML = '<p style="color:red;">Lataaminen on epäonnistunut.</p>';
+    detailsContainer.innerHTML = `<p style="color:red;">${translations[currentLang].loadFailed}</p>`;
     invoiceBtn.style.display = 'none';
     unsentBtn.style.display = 'none';
     editBtn.disabled = true;
@@ -199,13 +304,13 @@ editBtn.addEventListener('click', () => {
   saveBtn.style.display = 'inline-block';
   addPositionBtn.disabled = false;
   renderPositions(positions, true);
+  updateAllTexts(); // Update texts in edit mode
 });
 
 saveBtn.addEventListener('click', () => {
   const client = document.getElementById('client').value;
   const address = document.getElementById('address').value;
 
-  // Update positions from current inputs before saving
   const descs = [...document.querySelectorAll('.pos-desc')];
   const qtys = [...document.querySelectorAll('.pos-qty')];
   const units = [...document.querySelectorAll('.pos-unit')];
@@ -238,7 +343,7 @@ addPositionBtn.addEventListener('click', () => {
     renderPositions(positions, true);
     updateTotalPrice();
   } else {
-    alert('Avaa muokkaustila lisätäksesi rivejä.');
+    alert(translations[currentLang].addRowAlert);
   }
 });
 
@@ -251,10 +356,13 @@ function showSaveNotification() {
     notification.style.fontWeight = 'bold';
     detailsContainer.appendChild(notification);
   }
-  notification.textContent = 'TIEDOT TALLENNETTU';
+  notification.textContent = translations[currentLang].saveNotification;
   notification.style.marginRight = '10px';
 
   setTimeout(() => {
     if (notification) notification.remove();
   }, 2000);
 }
+
+// Initially update UI texts based on selected language
+updateAllTexts();

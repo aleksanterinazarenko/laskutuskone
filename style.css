@@ -61,8 +61,12 @@ a:hover {
     border: 1px solid #ddd;
     padding: 15px;
     border-radius: 4px;
-    font-size: 0.9em;
+    font-size: 1em;
 }
+
+input[type="text"] {
+    font-size: 1em;
+  }
 
 .invoice-btn {
     margin-top: 8px;
@@ -153,3 +157,22 @@ a:hover {
 #positions-table tbody tr:hover {
   background-color: #f9f9f9;
 }
+
+.header-row {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            flex-wrap: wrap;
+            margin-bottom: 20px;
+        }
+
+        .header-row h1 {
+            margin: 0;
+        }
+
+    #lang-select {
+        font-family: 'Roboto', sans-serif;
+        font-size: 1em;
+        align-items: center;
+        gap: 6px;
+    }

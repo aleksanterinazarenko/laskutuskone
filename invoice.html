@@ -1,55 +1,64 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
+    <meta charset="UTF-8" />
     <title>Laskun yksityiskohdat</title>
-    <link rel="stylesheet" href="style.css">
+    <link rel="stylesheet" href="style.css" />
 </head>
 <body>
 
-<h1>Lasku <span id="invoice-number"></span></h1>
+  <div class="header-row">
+    <h1>
+      <span data-translate-key="invoiceTitle">Lasku</span> 
+      <span id="invoice-number"></span>
+    </h1>
 
-<div id="invoice-details">
-    <label><strong>Asiakas:</strong><br>
-        <input type="text" id="client" />
-    </label><br><br>
+    <div>
+      <label for="lang-select" data-translate-key="languageLabel">Kieli / Language:</label>
+      <select id="lang-select">
+        <option value="fi" data-translate-key="fiOption">Suomi</option>
+        <option value="en" data-translate-key="enOption">English</option>
+      </select>
+    </div>
+  </div>
 
-    <label><strong>Laskutusosoite:</strong><br>
-        <input type="text" id="address" />
-    </label><br><br>
+  <div id="invoice-details">
+    <label for="client" data-translate-key="clientLabel"><strong>Asiakas:</strong></label><br>
+    <input type="text" id="client" /><br><br>
 
-    <label><strong>Hinta:</strong><br>
-        <input type="text" id="price" />
-    </label><br><br>
+    <label for="address" data-translate-key="addressLabel"><strong>Laskutusosoite:</strong></label><br>
+    <input type="text" id="address" /><br><br>
 
-</div>
+    <label for="price" data-translate-key="priceLabel"><strong>Hinta:</strong></label><br>
+    <input type="text" id="price" /><br><br>
+  </div>
 
-<button id="edit-btn" style="font-size: 0.9em; margin-right: 5px;">Muokkaa</button>
-<button id="save-btn" style="display:none; font-size: 0.9em;">Tallenna muutokset</button>
+  <button id="edit-btn" style="font-size: 0.9em; margin-right: 5px;" data-translate-key="editBtn">Muokkaa</button>
+  <button id="save-btn" style="display:none; font-size: 0.9em;" data-translate-key="saveBtn">Tallenna muutokset</button>
 
-<button id="invoice-btn" style="display:none; font-size: 0.9em;">Laskuta</button>
-<button id="unsent-btn" style="display:none; font-size: 0.9em;">Palauta</button>
+  <button id="invoice-btn" style="display:none; font-size: 0.9em;" data-translate-key="invoiceBtn">Laskuta</button>
+  <button id="unsent-btn" style="display:none; font-size: 0.9em;" data-translate-key="unsentBtn">Palauta</button>
 
-<table id="positions-table" style="width: 100%; border-collapse: collapse; margin-top: 20px;">
-  <thead>
-    <tr>
-      <th>Kuvaus</th>
-      <th>Määrä</th>
-      <th>Yksikköhinta (€)</th>
-      <th>Yhteensä (€)</th>
-      <th>Toiminnot</th> <!-- For Delete button -->
-    </tr>
-  </thead>
-  <tbody>
-    <!-- Positions rows will be inserted here -->
-  </tbody>
-</table>
+  <table id="positions-table" style="width: 100%; border-collapse: collapse; margin-top: 20px;">
+    <thead>
+      <tr>
+        <th data-translate-key="descHeader">Kuvaus</th>
+        <th data-translate-key="qtyHeader">Määrä</th>
+        <th data-translate-key="unitPriceHeader">Yksikköhinta (€)</th>
+        <th data-translate-key="totalHeader">Yhteensä (€)</th>
+        <th data-translate-key="actionsHeader">Toiminnot</th> <!-- For Delete button -->
+      </tr>
+    </thead>
+    <tbody>
+      <!-- Positions rows will be inserted here -->
+    </tbody>
+  </table>
 
-<button id="add-position-btn" style="margin-top: 20px; font-size: 0.9em;">Lisää rivi</button>
+  <button id="add-position-btn" style="margin-top: 20px; font-size: 0.9em;" data-translate-key="addPositionBtn">Lisää rivi</button>
 
-<div style="margin-top: 20px;">
-<a href="index.html">← Takaisin laskuihin</a>
-</div>
+  <div style="margin-top: 20px;">
+    <a href="index.html" data-translate-key="backLink">← Takaisin laskuihin</a>
+  </div>
 
 <script src="invoice.js"></script>
 </body>
