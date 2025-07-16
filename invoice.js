@@ -15,12 +15,11 @@ const saveBtn = document.getElementById('save-btn');
 let positions = [];
 
 const langSelect = document.getElementById('lang-select');
-let currentLang = 'fi'; // default language
+let currentLang = 'fi';
 
 if (langSelect) {
   currentLang = langSelect.value || 'fi';
 
-  // Add language change listener once
   langSelect.addEventListener('change', e => {
     currentLang = e.target.value;
     updateAllTexts();
@@ -95,21 +94,17 @@ function updateStaticTexts() {
 function updateAllTexts() {
   const t = translations[currentLang];
 
-  // Update button labels
   if (invoiceBtn) invoiceBtn.textContent = t.invoiceBtn;
   if (unsentBtn) unsentBtn.textContent = t.unsentBtn;
   if (editBtn) editBtn.textContent = t.editBtn;
   if (saveBtn) saveBtn.textContent = t.saveBtn;
   if (addPositionBtn) addPositionBtn.textContent = t.addPositionBtn;
 
-  // Update sent label text if visible
   const sentLabel = document.querySelector('.sent-label');
   if (sentLabel) sentLabel.textContent = t.sentLabel;
 
-  // Update static texts marked with data-translate-key attributes
   updateStaticTexts();
 
-  // Re-render positions to update delete buttons and totals according to edit mode
   const isEditing = saveBtn.style.display === 'inline-block';
   renderPositions(positions, isEditing);
 }
@@ -152,7 +147,6 @@ unsentBtn.addEventListener('click', () => {
   localStorage.setItem(`tab_${invoiceId}`, 'tab2');
   updateSentStatus();
   editBtn.disabled = false;
-  // Possibly enable editing if needed here
 });
 
 function setInputsDisabled(disabled) {
@@ -198,7 +192,6 @@ function renderPositions(positionsArray, editable = false) {
   });
 
   if (editable) {
-    // Add event listeners to delete buttons
     document.querySelectorAll('.delete-position').forEach(btn => {
       btn.addEventListener('click', e => {
         const idx = parseInt(e.target.dataset.index, 10);
@@ -208,7 +201,6 @@ function renderPositions(positionsArray, editable = false) {
       });
     });
 
-    // Add event listeners to inputs to update positions on input change
     const descInputs = document.querySelectorAll('.pos-desc');
     const qtyInputs = document.querySelectorAll('.pos-qty');
     const unitInputs = document.querySelectorAll('.pos-unit');
@@ -259,7 +251,6 @@ fetch('data.json')
       document.getElementById('address').value = merged.address || '';
       document.getElementById('price').value = merged.price || '';
 
-      // Style adjustments
       ['client', 'address', 'price'].forEach(id => {
         const el = document.getElementById(id);
         el.style.fontSize = '1em';
@@ -275,7 +266,6 @@ fetch('data.json')
         editBtn.disabled = true;
       }
 
-      // Update UI text for current language after loading data
       updateAllTexts();
     } else {
       detailsContainer.innerHTML = `<p style="color:red;">${translations[currentLang].noDataFound}</p>`;
@@ -364,5 +354,4 @@ function showSaveNotification() {
   }, 2000);
 }
 
-// Initially update UI texts based on selected language
 updateAllTexts();

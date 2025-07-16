@@ -28,49 +28,8 @@
     </div>
 
     <div id="invoices" class="invoice-list">
-        <!-- Invoice items will be inserted here -->
     </div>
 
-    <!-- Load language and translation logic -->
     <script src="script.js"></script>
-    <script>
-      const translations = {
-        en: {
-          invoices: "Invoices",
-          incoming: "Incoming",
-          billable: "Billable",
-          waitingToSend: "Waiting to Send",
-          sent: "Sent",
-          billed: "Billed",
-        },
-        fi: {
-          invoices: "Laskut",
-          incoming: "Tulossa",
-          billable: "Laskutettavissa",
-          waitingToSend: "Odottaa lähetystä",
-          sent: "Lähetetty",
-          billed: "Laskutettu"
-        }
-      };
-
-      function setLanguage(lang) {
-        document.querySelectorAll("[data-translate-key]").forEach(el => {
-          const key = el.getAttribute("data-translate-key");
-          if (translations[lang] && translations[lang][key]) {
-            el.innerText = translations[lang][key];
-          }
-        });
-      }
-
-      // Set initial language based on browser or default to Finnish
-      const userLang = navigator.language.startsWith('en') ? 'en' : 'fi';
-      document.getElementById('lang-select').value = userLang;
-      setLanguage(userLang);
-
-      // Listen for language change from dropdown
-      document.getElementById('lang-select').addEventListener('change', (e) => {
-        setLanguage(e.target.value);
-      });
-    </script>
 </body>
 </html>

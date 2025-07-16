@@ -93,7 +93,7 @@ input[type="text"] {
     margin-top: 8px;
     padding: 5px 10px;
     cursor: pointer;
-    background-color: #dc3545; /* bootstrap danger red */
+    background-color: #dc3545;
     color: white;
     border: none;
     border-radius: 3px;
@@ -109,7 +109,7 @@ input[type="text"] {
     margin-top: 8px;
     padding: 5px 10px;
     cursor: pointer;
-    background-color: #ffc107; /* Bootstrap warning yellow */
+    background-color: #ffc107;
     color: black;
     border: none;
     border-radius: 3px;

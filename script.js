@@ -1,25 +1,58 @@
 document.addEventListener('DOMContentLoaded', () => {
     const tabs = document.querySelectorAll('.tab-btn');
     const invoiceContainer = document.getElementById('invoices');
+    const langSelect = document.getElementById('lang-select');
+
     let allInvoices = [];
+    let currentLang = navigator.language.startsWith('en') ? 'en' : 'fi';
 
-    // Load invoices from data.json
-    fetch('data.json')
-        .then(response => response.json())
-        .then(data => {
-            allInvoices = data;
-            renderInvoices('tab1'); // Default tab
+    const translations = {
+        en: {
+            invoices: "Invoices",
+            incoming: "Incoming",
+            billable: "Billable",
+            waitingToSend: "Waiting to Send",
+            sent: "Sent",
+            billed: "Billed",
+            moveToBillable: "Move to Billable",
+            invoice: "Invoice",
+            moveToWaiting: "Move to Waiting",
+            return: "Return",
+            client: "Client",
+            address: "Address",
+            price: "Price",
+            sendInvoice: "Send Invoice"
+        },
+        fi: {
+            invoices: "Laskut",
+            incoming: "Tulossa",
+            billable: "Laskutettavissa",
+            waitingToSend: "Odottaa lähetystä",
+            sent: "Lähetetty",
+            billed: "Laskutettu",
+            moveToBillable: "Siirrä laskutettaviin",
+            invoice: "Lasku",
+            moveToWaiting: "Siirrä odottaviin",
+            return: "Palauta",
+            client: "Asiakas",
+            address: "Osoite",
+            price: "Hinta",
+            sendInvoice: "Laskuta"
+        }
+    };
+
+    function setLanguage(lang) {
+        currentLang = lang;
+
+        document.querySelectorAll('[data-translate-key]').forEach(el => {
+            const key = el.getAttribute('data-translate-key');
+            if (translations[lang][key]) {
+                el.innerText = translations[lang][key];
+            }
         });
 
-    // Handle tab switching
-    tabs.forEach(tab => {
-        tab.addEventListener('click', () => {
-            tabs.forEach(t => t.classList.remove('active'));
-            tab.classList.add('active');
-            const tabKey = tab.getAttribute('data-tab');
-            renderInvoices(tabKey);
-        });
-    });
+        renderInvoices(getActiveTabKey());
+    }
 
     function getTab(invoiceId) {
         return localStorage.getItem(`tab_${invoiceId}`) || 'tab1';
@@ -29,49 +62,43 @@ document.addEventListener('DOMContentLoaded', () => {
         localStorage.setItem(`tab_${invoiceId}`, tabKey);
     }
 
+    function getActiveTabKey() {
+        return document.querySelector('.tab-btn.active')?.getAttribute('data-tab') || 'tab1';
+    }
+
     function renderInvoices(tabKey) {
         const invoices = allInvoices.filter(inv => getTab(inv.invoice) === tabKey);
         invoiceContainer.innerHTML = invoices.map(inv => {
-    const isSent = localStorage.getItem(inv.invoice) === 'sent';
+            const saved = JSON.parse(localStorage.getItem(`edit_${inv.invoice}`) || '{}');
+            const client = saved.client || inv.client;
+            const price = saved.price || inv.price;
+            const address = saved.address || inv.address || '-';
 
-    const saved = JSON.parse(localStorage.getItem(`edit_${inv.invoice}`) || '{}');
-    const client = saved.client || inv.client;
-    const price = saved.price || inv.price;
-    const address = saved.address || inv.address || '';
-
-    let actions = '';
-
-            // Actions depending on tab
+            let actions = '';
             if (tabKey === 'tab1') {
-                actions = `<button class="move-btn" data-invoice="${inv.invoice}" data-target="tab2">Siirrä laskutettaviin</button>`;
+                actions = `<button class="move-btn" data-invoice="${inv.invoice}" data-target="tab2">${translations[currentLang].moveToBillable}</button>`;
             } else if (tabKey === 'tab2') {
                 actions = `
-                    <button class="invoice-btn" data-invoice="${inv.invoice}">Laskuta</button>
-                    <button class="move-btn" data-invoice="${inv.invoice}" data-target="tab3">Siirrä odottaviin</button>
+                    <button class="invoice-btn" data-invoice="${inv.invoice}">${translations[currentLang].sendInvoice}</button>
+                    <button class="move-btn" data-invoice="${inv.invoice}" data-target="tab3">${translations[currentLang].moveToWaiting}</button>
                 `;
+            } else if (tabKey === 'tab3') {
+                actions = `<button class="move-btn" data-invoice="${inv.invoice}" data-target="tab2">${translations[currentLang].moveToBillable}</button>`;
+            } else if (tabKey === 'tab4') {
+                actions = `<button class="unsent-btn" data-invoice="${inv.invoice}">${translations[currentLang].return}</button>`;
             }
-else if (tabKey === 'tab3') {
-    actions = `<button class="move-btn" data-invoice="${inv.invoice}" data-target="tab2">Siirrä laskutettaviin</button>`;
-}
-else if (tabKey === 'tab4') {
-    actions = `
-        <button class="unsent-btn" data-invoice="${inv.invoice}">Palauta</button>
-    `;
-}
 
             return `
-    <div class="invoice-item">
-        <strong>Lasku:</strong> <a href="invoice.html?invoice=${inv.invoice}">${inv.invoice}</a> 
-        <br>
-        <strong>Asiakas:</strong> ${client} <br>
-        <strong>Osoite:</strong> ${address || '-'} <br>
-        <strong>Hinta:</strong> ${price} <br>
-        ${actions}
-    </div>
-`;
-}).join('');
+                <div class="invoice-item">
+                    <strong>${translations[currentLang].invoice}:</strong> <a href="invoice.html?invoice=${inv.invoice}">${inv.invoice}</a><br>
+                    <strong>${translations[currentLang].client}:</strong> ${client}<br>
+                    <strong>${translations[currentLang].address}:</strong> ${address}<br>
+                    <strong>${translations[currentLang].price}:</strong> ${price}<br>
+                    ${actions}
+                </div>
+            `;
+        }).join('');
 
-        // Attach event handlers
         document.querySelectorAll('.invoice-btn').forEach(btn => {
             btn.addEventListener('click', (e) => {
                 const invoiceId = e.target.getAttribute('data-invoice');
@@ -91,12 +118,33 @@ else if (tabKey === 'tab4') {
         });
 
         document.querySelectorAll('.unsent-btn').forEach(btn => {
-    btn.addEventListener('click', (e) => {
-        const invoiceId = e.target.getAttribute('data-invoice');
-        localStorage.removeItem(invoiceId); // remove 'sent' status
-        setTab(invoiceId, 'tab2');          // move to tab2
-        renderInvoices(tabKey);             // refresh the current view
-    });
-});
+            btn.addEventListener('click', (e) => {
+                const invoiceId = e.target.getAttribute('data-invoice');
+                localStorage.removeItem(invoiceId);
+                setTab(invoiceId, 'tab2');
+                renderInvoices(tabKey);
+            });
+        });
     }
+
+    fetch('data.json')
+        .then(response => response.json())
+        .then(data => {
+            allInvoices = data;
+            setLanguage(currentLang);
+            renderInvoices('tab1');
+        });
+
+    tabs.forEach(tab => {
+        tab.addEventListener('click', () => {
+            tabs.forEach(t => t.classList.remove('active'));
+            tab.classList.add('active');
+            renderInvoices(tab.getAttribute('data-tab'));
+        });
+    });
+
+    langSelect.value = currentLang;
+    langSelect.addEventListener('change', (e) => {
+        setLanguage(e.target.value);
+    });
 });
