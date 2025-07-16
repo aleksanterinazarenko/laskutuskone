@@ -168,7 +168,6 @@ document.addEventListener('DOMContentLoaded', () => {
       }
       tr.appendChild(descTd);
 
-      // Quantity cell
       const qtyTd = document.createElement('td');
       if (editable) {
         const input = document.createElement('input');
